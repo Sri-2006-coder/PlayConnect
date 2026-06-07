@@ -14,7 +14,7 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
 
       <Route path="/register" element={<Register />} />
-      <Route path="/CreateMatch" element={<CreateMatch />} />
+      <Route path="/create-match" element={<CreateMatch />} />
 
     </Routes>
   );

@@ -3,7 +3,7 @@ import loginImg from "../assets/login.png";
 
 export default function Login() {
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 py-20 overflow-hidden relative">
+    <div className="min-h-screen w-full bg-black text-white flex items-center justify-center px-6 py-20 relative">
 
       {/* BG GLOW */}
       <div className="absolute w-[400px] h-[400px] bg-green-500/20 blur-[180px] rounded-full left-[-100px] top-[-100px]"></div>
@@ -25,10 +25,9 @@ export default function Login() {
 
         {/* RIGHT FORM */}
         <div className="p-10 md:p-16 flex flex-col justify-center">
-
-          <h1 className="text-5xl font-extrabold mb-3">
-            Welcome Back!
-          </h1>
+<h1 className="text-5xl font-extrabold mb-3 text-white">
+  Welcome <span className="text-green-400">Back!</span>
+</h1>
 
           <p className="text-gray-400 mb-10">
             Login to continue your sports journey.

@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import MatchCard from "../components/MatchCard";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 import hero from "../assets/hero2.png";
 import cricket from "../assets/cricket.png";
@@ -8,66 +9,77 @@ import football from "../assets/football.png";
 import badminton from "../assets/badminton.png";
 
 export default function Home() {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen w-full bg-black text-white overflow-x-hidden">
+
       <Navbar />
 
       {/* HERO */}
-      {/* HERO */}
-      <section className="relative h-screen">
+      <section className="relative h-screen w-full overflow-hidden">
 
-<img
-  src={hero}
-  alt="Hero"
-  className="absolute inset-0 w-full h-full object-cover object-right"
-/>
+        {/* Background image */}
+        <img
+          src={hero}
+          alt="Hero"
+          className="absolute inset-0 w-full h-full object-cover object-right"
+        />
 
-<div className="absolute inset-0 bg-black/60"></div>
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/60"></div>
 
-<div className="absolute left-0 top-0 w-[500px] h-[500px] bg-green-500/20 blur-[180px] rounded-full"></div>
+        {/* Glow effect */}
+        <div className="absolute left-0 top-0 w-[500px] h-[500px] bg-green-500/20 blur-[180px] rounded-full"></div>
 
-<div className="relative z-10 h-full flex items-center">
+        {/* CONTENT */}
+        <div className="relative z-10 h-full flex items-center">
 
-  <div className="max-w-7xl mx-auto w-full px-12">
+          <div className="max-w-7xl mx-auto w-full px-6">
 
-    <div className="max-w-2xl">
+            <div className="max-w-2xl">
 
-      <h1 className="text-7xl md:text-8xl font-extrabold leading-none">
-        Find
-      </h1>
+              <h1 className="text-7xl md:text-8xl font-extrabold leading-none">
+                Find
+              </h1>
 
-      <h1 className="text-7xl md:text-8xl font-extrabold text-green-400 leading-none">
-        Players
-      </h1>
+              <h1 className="text-7xl md:text-8xl font-extrabold text-green-400 leading-none">
+                <span className="text-green-400">Players</span>
+              </h1>
 
-      <h1 className="text-7xl md:text-8xl font-extrabold leading-none">
-        Nearby
-      </h1>
+              <h1 className="text-7xl md:text-8xl font-extrabold leading-none">
+                Nearby
+              </h1>
 
-      <p className="mt-8 text-xl text-gray-300 max-w-xl">
-        Join local cricket, football and badminton matches.
-        Discover players around you and never miss a game again.
-      </p>
+              <p className="mt-8 text-xl text-gray-300 max-w-xl">
+                Join local cricket, football and badminton matches.
+                Discover players around you and never miss a game again.
+              </p>
 
-      <div className="mt-10 flex gap-5">
+              {/* BUTTONS (FIXED) */}
+              <div className="mt-10 flex gap-5">
 
-        <button className="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-xl font-bold transition">
-          Create Match
-        </button>
+                <button
+                  type="button"
+                  onClick={() => navigate("/create-match")}
+                  className="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-xl font-semibold cursor-pointer"
+                >
+                  Create Match
+                </button>
 
-        <button className="border border-white/20 hover:border-green-400 px-8 py-4 rounded-xl transition">
-          Explore Matches
-        </button>
+                <button className="border border-white/20 hover:border-green-400 px-8 py-4 rounded-xl transition">
+                  Explore Matches
+                </button>
 
-      </div>
+              </div>
 
-    </div>
+            </div>
 
-  </div>
+          </div>
 
-</div>
+        </div>
 
-</section>
+      </section>
 
       {/* STATS */}
       <section className="py-24 bg-gradient-to-b from-black to-gray-950">
@@ -76,34 +88,19 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8 text-center">
 
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-10 hover:border-green-400 transition-all duration-300">
-              <h2 className="text-6xl font-bold text-green-400">
-                500+
-              </h2>
-
-              <p className="mt-4 text-gray-400">
-                Matches Created
-              </p>
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-green-400 transition">
+              <h2 className="text-6xl font-bold text-green-400">500+</h2>
+              <p className="mt-4 text-gray-400">Matches Created</p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-10 hover:border-green-400 transition-all duration-300">
-              <h2 className="text-6xl font-bold text-green-400">
-                1200+
-              </h2>
-
-              <p className="mt-4 text-gray-400">
-                Players Joined
-              </p>
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-green-400 transition">
+              <h2 className="text-6xl font-bold text-green-400">1200+</h2>
+              <p className="mt-4 text-gray-400">Players Joined</p>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-10 hover:border-green-400 transition-all duration-300">
-              <h2 className="text-6xl font-bold text-green-400">
-                50+
-              </h2>
-
-              <p className="mt-4 text-gray-400">
-                Cities Covered
-              </p>
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-green-400 transition">
+              <h2 className="text-6xl font-bold text-green-400">50+</h2>
+              <p className="mt-4 text-gray-400">Cities Covered</p>
             </div>
 
           </div>
@@ -127,26 +124,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-10">
 
-            <MatchCard
-              image={cricket}
-              title="Sunday Cricket"
-              venue="RK Beach Ground"
-              players="7 / 11"
-            />
-
-            <MatchCard
-              image={football}
-              title="Evening Football"
-              venue="City Stadium"
-              players="14 / 22"
-            />
-
-            <MatchCard
-              image={badminton}
-              title="Badminton Doubles"
-              venue="Sports Arena"
-              players="3 / 4"
-            />
+            <MatchCard image={cricket} title="Sunday Cricket" venue="RK Beach Ground" players="7 / 11" />
+            <MatchCard image={football} title="Evening Football" venue="City Stadium" players="14 / 22" />
+            <MatchCard image={badminton} title="Badminton Doubles" venue="Sports Arena" players="3 / 4" />
 
           </div>
 
@@ -167,38 +147,20 @@ export default function Home() {
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center">
               <div className="text-5xl mb-4">1️⃣</div>
-
-              <h3 className="text-2xl font-bold mb-3">
-                Create Match
-              </h3>
-
-              <p className="text-gray-400">
-                Create a cricket, football or badminton match.
-              </p>
+              <h3 className="text-2xl font-bold mb-3">Create Match</h3>
+              <p className="text-gray-400">Create a cricket, football or badminton match.</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center">
               <div className="text-5xl mb-4">2️⃣</div>
-
-              <h3 className="text-2xl font-bold mb-3">
-                Invite Players
-              </h3>
-
-              <p className="text-gray-400">
-                Nearby players can discover and join.
-              </p>
+              <h3 className="text-2xl font-bold mb-3">Invite Players</h3>
+              <p className="text-gray-400">Nearby players can discover and join.</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 text-center">
               <div className="text-5xl mb-4">3️⃣</div>
-
-              <h3 className="text-2xl font-bold mb-3">
-                Play & Connect
-              </h3>
-
-              <p className="text-gray-400">
-                Meet new people and enjoy your favorite sport.
-              </p>
+              <h3 className="text-2xl font-bold mb-3">Play & Connect</h3>
+              <p className="text-gray-400">Meet new people and enjoy your favorite sport.</p>
             </div>
 
           </div>

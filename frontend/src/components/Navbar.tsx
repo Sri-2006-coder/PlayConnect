@@ -3,14 +3,14 @@ import { FaFutbol } from "react-icons/fa";
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 relative">
       <div className="w-full flex justify-between items-center px-12 py-6">
 
         <Link to="/" className="flex items-center gap-3">
           <FaFutbol className="text-green-400 text-3xl" />
 
           <h1 className="text-white text-4xl font-bold">
-            PlayConnect
+            Play<span className="text-green-400">Connect</span>
           </h1>
         </Link>
 

@@ -14,7 +14,7 @@ export default function Register() {
         <div className="p-10 md:p-16 flex flex-col justify-center">
 
           <h1 className="text-5xl font-extrabold mb-3">
-            Create Account
+            Create <span className="text-green-400">Account</span>
           </h1>
 
           <p className="text-gray-400 mb-10">

@@ -13,7 +13,7 @@ export default function CreateMatch() {
         <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[35px] p-10 md:p-14">
 
           <h1 className="text-5xl font-extrabold mb-3">
-            Create Match
+            Create <span className="text-green-400">Match</span>
           </h1>
 
           <p className="text-gray-400 mb-10">
