@@ -1,16 +1,20 @@
+import { useNavigate } from "react-router-dom";
 type Props = {
-    image: string;
-    title: string;
-    venue: string;
-    players: string;
-  };
+  id: number;
+  image: string;
+  title: string;
+  venue: string;
+  players: string;
+};
   
   export default function MatchCard({
+    id,
     image,
     title,
     venue,
     players,
   }: Props) {
+    const navigate = useNavigate();
     return (
       <div className="group bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden hover:border-green-400 hover:scale-105 transition-all duration-300">
   
@@ -35,10 +39,12 @@ type Props = {
           <p className="text-green-400 mt-2">
             👥 {players}
           </p>
-  
-          <button className="w-full mt-5 bg-green-500 hover:bg-green-600 py-3 rounded-xl font-semibold transition">
-            Join Match
-          </button>
+   <button
+          onClick={() => navigate(`/match/${id}`)}
+          className="w-full mt-5 bg-green-500 hover:bg-green-600 py-3 rounded-xl font-semibold transition"
+        >
+          Join Match
+        </button>
   
         </div>
   

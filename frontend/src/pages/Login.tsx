@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import loginImg from "../assets/login.png";
+import Navbar from "../components/Navbar";
 
 export default function Login() {
+  <>
+  <Navbar />
+
+  <div className="min-h-screen ..."></div>
+  </>
   return (
     <div className="min-h-screen w-full bg-black text-white flex items-center justify-center px-6 py-20 relative">
 

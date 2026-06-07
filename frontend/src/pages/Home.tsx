@@ -67,9 +67,12 @@ export default function Home() {
                   Create Match
                 </button>
 
-                <button className="border border-white/20 hover:border-green-400 px-8 py-4 rounded-xl transition">
-                  Explore Matches
-                </button>
+                <button
+  onClick={() => navigate("/matches")}
+  className="border border-white/20 hover:border-green-400 px-8 py-4 rounded-xl transition"
+>
+  Explore Matches
+</button>
 
               </div>
 

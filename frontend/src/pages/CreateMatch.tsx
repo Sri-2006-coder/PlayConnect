@@ -1,6 +1,11 @@
 import createImg from "../assets/matchp.png";
-
+import Navbar from "../components/Navbar";
 export default function CreateMatch() {
+  <>
+  <Navbar />
+
+  <div className="min-h-screen ..."></div>
+</>
   return (
     <div className="min-h-screen bg-black text-white px-6 py-24 relative overflow-hidden flex items-center justify-center">
 

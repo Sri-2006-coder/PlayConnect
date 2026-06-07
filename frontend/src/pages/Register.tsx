@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import registerImg from "../assets/register.png";
-
+import Navbar from "../components/Navbar";
 export default function Register() {
+  <>
+  <Navbar />
+
+  <div className="min-h-screen ..."></div>
+  </>
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 py-20 overflow-hidden relative">
 
