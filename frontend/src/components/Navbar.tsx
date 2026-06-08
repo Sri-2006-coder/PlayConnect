@@ -49,6 +49,13 @@ export default function Navbar() {
             Dashboard
           </Link>
 
+           <Link
+  to="/profile"
+  className="text-white text-lg hover:text-green-400 transition"
+>
+  Profile
+</Link>
+
         </div>
 
         {/* RIGHT */}
@@ -67,6 +74,7 @@ export default function Navbar() {
           >
             Register
           </Link>
+     
 
         </div>
 
