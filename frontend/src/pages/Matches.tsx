@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import MatchCard from "../components/MatchCard";
 
@@ -7,64 +8,30 @@ import football from "../assets/football.png";
 import badminton from "../assets/badminton.png";
 
 export default function Matches() {
-  const [search, setSearch] = useState("");
-  const [sportFilter, setSportFilter] = useState("All");
+ const [search, setSearch] = useState("");
+const [sportFilter, setSportFilter] = useState("All");
+const [matches, setMatches] = useState<any[]>([]);
 
-  const matches = [
-    {
-        id:1,
-      image: cricket,
-      title: "Sunday Cricket",
-      venue: "RK Beach Ground",
-      players: "7 / 11",
-      sport: "Cricket",
-    },
-    {
-        id:2,
-      image: football,
-      title: "Evening Football",
-      venue: "City Stadium",
-      players: "14 / 22",
-      sport: "Football",
-    },
-    {
-        id:3,
-      image: badminton,
-      title: "Badminton Doubles",
-      venue: "Sports Arena",
-      players: "3 / 4",
-      sport: "Badminton",
-    },
-    {
-        id:4,
-      image: football,
-      title: "Weekend Football",
-      venue: "University Ground",
-      players: "18 / 22",
-      sport: "Football",
-    },
-    {
-        id:5,
-      image: cricket,
-      title: "Morning Cricket",
-      venue: "Central Park",
-      players: "9 / 11",
-      sport: "Cricket",
-    },
-    {
-        id:6,
-      image: badminton,
-      title: "Pro Badminton",
-      venue: "Indoor Arena",
-      players: "2 / 4",
-      sport: "Badminton",
-    },
-  ];
+  useEffect(() => {
+  fetchMatches();
+}, []);
+
+const fetchMatches = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:8080/api/matches"
+    );
+
+    setMatches(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   const filteredMatches = matches.filter((match) => {
     const matchesSearch =
-      match.title.toLowerCase().includes(search.toLowerCase()) ||
-      match.venue.toLowerCase().includes(search.toLowerCase());
+      (match.title || "").toLowerCase().includes(search.toLowerCase()) ||
+      (match.venue || "").toLowerCase().includes(search.toLowerCase());
 
     const matchesSport =
       sportFilter === "All" || match.sport === sportFilter;
@@ -127,15 +94,16 @@ export default function Matches() {
         {/* MATCH GRID */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          {filteredMatches.map((match, index) => (
-            <MatchCard
-  id={match.id}
-  image={match.image}
-  title={match.title}
-  venue={match.venue}
-  players={match.players}
-/>
-          ))}
+         {filteredMatches.map((match) => (
+  <MatchCard
+    key={match.id}
+    id={match.id}
+    image={football}
+    title={match.title}
+    venue={match.venue}
+    players={`${match.currentPlayers} / ${match.playersNeeded}`}
+  />
+))}
 
         </div>
 

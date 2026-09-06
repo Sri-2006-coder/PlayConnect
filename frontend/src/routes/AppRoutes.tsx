@@ -9,18 +9,53 @@ import MatchDetails from "../pages/MatchDetails";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/profile";
 import EditProfile from "../pages/EditProfile";
+import ProtectedRoute from "../components/ProtectedRoute";
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/edit-profile" element={<EditProfile />} />
-     <Route path="/profile" element={<Profile />} />
+      {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/matches" element={<Matches />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/match/:id" element={<MatchDetails />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/create-match" element={<CreateMatch />} />
-<Route path="/dashboard" element={<Dashboard />} />
+
+      {/* Protected Routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/create-match"
+        element={
+          <ProtectedRoute>
+            <CreateMatch />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/edit-profile"
+        element={
+          <ProtectedRoute>
+            <EditProfile />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

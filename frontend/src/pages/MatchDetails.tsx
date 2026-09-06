@@ -1,59 +1,54 @@
 import Navbar from "../components/Navbar";
 import football from "../assets/football.png";
-import { useParams } from "react-router-dom";
-import {useState} from "react";
 import cricket from "../assets/cricket.png";
 import badminton from "../assets/badminton.png";
+
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 export default function MatchDetails() {
-    const { id } = useParams();
-    const [joined, setJoined] = useState(false);
-    const matchData: Record<string, any> = {
-  "1": {
-    title: "Sunday Cricket",
-    venue: "RK Beach Ground",
-    date: "Sunday, June 15",
-    time: "7:00 AM",
-    players: "7 / 11",
-    host: "Rahul Sharma",
-    age: 22,
-    rating: 4.8,
-    image: cricket,
-    about:
-      "Friendly cricket match for local players. Looking for enthusiastic batsmen and bowlers.",
-    phone:"9866420471",
-  },
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  "2": {
-    title: "Evening Football",
-    venue: "City Stadium",
-    date: "Saturday, June 14",
-    time: "6:30 PM",
-    players: "14 / 22",
-    host: "Arjun Kumar",
-    age: 24,
-    rating: 4.9,
-    image: football,
-    about:
-      "Competitive football game for intermediate players. Bring football shoes and water.",
-    phone:"9086457812",
-  },
+  const [joined, setJoined] = useState(false);
+  const [match, setMatch] = useState<any>(null);
 
-  "3": {
-    title: "Badminton Doubles",
-    venue: "Sports Arena",
-    date: "Friday, June 13",
-    time: "5:00 PM",
-    players: "3 / 4",
-    host: "Priya Reddy",
-    age: 21,
-    rating: 4.7,
-    image: badminton,
-    about:
-      "Casual doubles badminton match. All skill levels are welcome.",
-    phone:"8964532190",
-  },
+  const handleJoin = () => {
+    const user = localStorage.getItem("loggedInUser");
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    setJoined(true);
+  };
+
+  useEffect(() => {
+  fetchMatch();
+}, [id]);
+
+const fetchMatch = async () => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/matches/${id}`
+    );
+
+    setMatch(response.data);
+  } catch (error) {
+    console.error(error);
+  }
 };
-const match = matchData[id || "1"];
+
+if (!match) {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      Loading...
+    </div>
+  );
+}
+
   return (
     <div className="min-h-screen bg-black text-white">
 
@@ -64,11 +59,17 @@ const match = matchData[id || "1"];
 
         <div className="overflow-hidden rounded-3xl border border-white/10">
 
-        <img
-  src={match.image}
-  alt={match.title}
-  className="w-full h-[450px] object-cover"
-/>
+          <img
+            src={
+  match.sport === "Cricket"
+    ? cricket
+    : match.sport === "Badminton"
+    ? badminton
+    : football
+}
+            alt={match.title}
+            className="w-full h-[450px] object-cover"
+          />
 
         </div>
 
@@ -79,8 +80,8 @@ const match = matchData[id || "1"];
           <div className="lg:col-span-2">
 
             <h1 className="text-5xl font-extrabold">
-  {match.title}
-</h1>
+              {match.title}
+            </h1>
 
             <div className="mt-6 space-y-3 text-gray-300 text-lg">
 
@@ -89,8 +90,10 @@ const match = matchData[id || "1"];
               <p>📅 {match.date}</p>
 
               <p>⏰ {match.time}</p>
-
-              <p>👥 {match.players} Players Joined</p>
+<p>
+  👥 {match.currentPlayers} / {match.playersNeeded}
+  {" "}Players Joined
+</p>
 
             </div>
 
@@ -102,7 +105,7 @@ const match = matchData[id || "1"];
               </h2>
 
               <p className="text-gray-400 leading-8">
-                {match.about}
+                {match.description}
               </p>
 
             </div>
@@ -140,15 +143,15 @@ const match = matchData[id || "1"];
 
               <div className="space-y-4">
 
-                <p>👤 {match.host}</p>
+                <p>👤 {match.hosName}</p>
 
-                <p>🎂 Age: {match.age}</p>
+                <p>📧 {match.hostEmail}</p>
 
-                <p>⭐ Rating: {match.rating} /5</p>
+                <p>🏅 Match Host</p>
 
                 <p>🏆 Matches Hosted: 15</p>
 
-                <p>📍 Visakhapatnam</p>
+                <p>📍 {match.venue}</p>
 
               </div>
 
@@ -166,35 +169,37 @@ const match = matchData[id || "1"];
               </p>
 
               {!joined ? (
-  <button
-    onClick={() => setJoined(true)}
-    className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl text-black font-bold transition"
-  >
-    Join Now
-  </button>
-) : (
-  <div className="space-y-4">
+                <button
+                  onClick={handleJoin}
+                  className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl text-black font-bold transition"
+                >
+                  Join Now
+                </button>
+              ) : (
+                <div className="space-y-4">
 
-    <div className="bg-green-500/20 border border-green-500 rounded-xl p-4">
-      <p className="text-green-400 font-bold">
-        ✅ Successfully Joined
-      </p>
-    </div>
+                  <div className="bg-green-500/20 border border-green-500 rounded-xl p-4">
 
-    <div className="space-y-2 text-gray-300">
+                    <p className="text-green-400 font-bold">
+                      ✅ Successfully Joined
+                    </p>
 
-      <p>
-        👤 Host: {match.host}
-      </p>
+                  </div>
 
-      <p>
-        📞 Contact: {match.phone}
-      </p>
+                  <div className="space-y-2 text-gray-300">
 
-    </div>
+                    <p>
+                      👤 Host: {match.hostName}
+                    </p>
 
-  </div>
-)}
+                    <p>
+                      📞 Contact: {match.hostPhone}
+                    </p>
+
+                  </div>
+
+                </div>
+              )}
 
             </div>
 

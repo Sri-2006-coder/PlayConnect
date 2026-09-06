@@ -1,12 +1,58 @@
 import createImg from "../assets/matchp.png";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function CreateMatch() {
-  <>
-  <Navbar />
 
-  <div className="min-h-screen ..."></div>
-</>
+  const navigate = useNavigate();
+
+const [sport, setSport] = useState("Football");
+const [title, setTitle] = useState("");
+const [venue, setVenue] = useState("");
+const [date, setDate] = useState("");
+const [time, setTime] = useState("");
+const [playersNeeded, setPlayersNeeded] = useState("");
+const [description, setDescription] = useState("");
+
+const handleCreateMatch = async (
+  e: React.FormEvent
+) => {
+  e.preventDefault();
+
+  try {
+    const user = JSON.parse(
+      localStorage.getItem("loggedInUser") || "{}"
+    );
+
+    await axios.post(
+      "http://localhost:8080/api/matches",
+      {
+        sport,
+        title,
+        venue,
+        date,
+        time,
+        playersNeeded: Number(playersNeeded),
+        currentPlayers: 1,
+        description,
+        hostName: user.name,
+        hostEmail: user.email,
+        hostPhone: "Not Provided",
+      }
+    );
+
+    alert("Match Created Successfully!");
+
+    navigate("/matches");
+  } catch (error) {
+    console.error(error);
+    alert("Failed to create match");
+  }
+};
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-black text-white px-6 py-24 relative overflow-hidden flex items-center justify-center">
 
       {/* BG GLOW */}
@@ -25,7 +71,7 @@ export default function CreateMatch() {
             Organize games and invite nearby players.
           </p>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleCreateMatch}>
 
             {/* SPORT */}
             <div>
@@ -35,8 +81,10 @@ export default function CreateMatch() {
               </label>
 
               <select
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              >
+  value={sport}
+  onChange={(e) => setSport(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+>
                 <option className="bg-black">Football</option>
                 <option className="bg-black">Cricket</option>
                 <option className="bg-black">Badminton</option>
@@ -52,10 +100,13 @@ export default function CreateMatch() {
               </label>
 
               <input
-                type="text"
-                placeholder="Enter match title"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
+  type="text"
+  placeholder="Enter match title"
+  value={title}
+  onChange={(e) => setTitle(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+  required
+/>
 
             </div>
 
@@ -67,10 +118,13 @@ export default function CreateMatch() {
               </label>
 
               <input
-                type="text"
-                placeholder="Enter venue"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
+  type="text"
+  placeholder="Enter venue"
+  value={venue}
+  onChange={(e) => setVenue(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+  required
+/>
 
             </div>
 
@@ -84,9 +138,12 @@ export default function CreateMatch() {
                 </label>
 
                 <input
-                  type="date"
-                  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-                />
+  type="date"
+  value={date}
+  onChange={(e) => setDate(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+  required
+/>
 
               </div>
 
@@ -96,10 +153,13 @@ export default function CreateMatch() {
                   Time
                 </label>
 
-                <input
-                  type="time"
-                  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-                />
+               <input
+  type="time"
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+  required
+/>
 
               </div>
 
@@ -111,12 +171,14 @@ export default function CreateMatch() {
               <label className="block mb-2 text-gray-300">
                 Max Players
               </label>
-
-              <input
-                type="number"
-                placeholder="22"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
+<input
+  type="number"
+  placeholder="22"
+  value={playersNeeded}
+  onChange={(e) => setPlayersNeeded(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+  required
+/>
 
             </div>
 
@@ -128,17 +190,20 @@ export default function CreateMatch() {
               </label>
 
               <textarea
-                rows={4}
-                placeholder="Write match details..."
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white resize-none"
-              ></textarea>
+  rows={4}
+  placeholder="Write match details..."
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white resize-none"
+></textarea>
 
             </div>
 
             {/* BUTTON */}
             <button
-              className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl text-lg font-bold transition"
-            >
+  type="submit"
+  className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl text-lg font-bold transition"
+>
               Create Match
             </button>
 
@@ -193,5 +258,6 @@ export default function CreateMatch() {
       </div>
 
     </div>
+    </>
   );
 }

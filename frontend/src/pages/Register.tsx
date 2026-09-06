@@ -1,118 +1,166 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 import registerImg from "../assets/register.png";
 import Navbar from "../components/Navbar";
+
 export default function Register() {
-  <>
-  <Navbar />
+  const navigate = useNavigate();
 
-  <div className="min-h-screen ..."></div>
-  </>
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8080/api/users/register", {
+        name,
+        email,
+        password,
+        age: 21,
+        gender: "",
+        location: "",
+      });
+
+      alert("Registration successful!");
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      alert("Registration failed");
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 py-20 overflow-hidden relative">
+    <>
+      <Navbar />
 
-      {/* BG GLOW */}
-      <div className="absolute w-[450px] h-[450px] bg-green-500/20 blur-[200px] rounded-full right-[-120px] bottom-[-120px]"></div>
+      <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 py-20 overflow-hidden relative">
 
-      <div className="w-full max-w-6xl grid md:grid-cols-2 bg-white/5 border border-white/10 backdrop-blur-xl rounded-[40px] overflow-hidden shadow-2xl">
+        {/* BG GLOW */}
+        <div className="absolute w-[450px] h-[450px] bg-green-500/20 blur-[200px] rounded-full right-[-120px] bottom-[-120px]"></div>
 
-        {/* FORM */}
-        <div className="p-10 md:p-16 flex flex-col justify-center">
+        <div className="w-full max-w-6xl grid md:grid-cols-2 bg-white/5 border border-white/10 backdrop-blur-xl rounded-[40px] overflow-hidden shadow-2xl">
 
-          <h1 className="text-5xl font-extrabold mb-3">
-            Create <span className="text-green-400">Account</span>
-          </h1>
+          {/* FORM */}
+          <div className="p-10 md:p-16 flex flex-col justify-center">
 
-          <p className="text-gray-400 mb-10">
-            Join PlayConnect and start finding matches.
-          </p>
+            <h1 className="text-5xl font-extrabold mb-3">
+              Create <span className="text-green-400">Account</span>
+            </h1>
 
-          <form className="space-y-6">
+            <p className="text-gray-400 mb-10">
+              Join PlayConnect and start finding matches.
+            </p>
 
-            <div>
-              <label className="block mb-2 text-gray-300">
-                Full Name
-              </label>
+            <form className="space-y-6" onSubmit={handleRegister}>
 
-              <input
-                type="text"
-                placeholder="Enter your name"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
-            </div>
+              <div>
+                <label className="block mb-2 text-gray-300">
+                  Full Name
+                </label>
 
-            <div>
-              <label className="block mb-2 text-gray-300">
-                Email
-              </label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+                  required
+                />
+              </div>
 
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
-            </div>
+              <div>
+                <label className="block mb-2 text-gray-300">
+                  Email
+                </label>
 
-            <div>
-              <label className="block mb-2 text-gray-300">
-                Password
-              </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+                  required
+                />
+              </div>
 
-              <input
-                type="password"
-                placeholder="Create password"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
-            </div>
+              <div>
+                <label className="block mb-2 text-gray-300">
+                  Password
+                </label>
 
-            <div>
-              <label className="block mb-2 text-gray-300">
-                Confirm Password
-              </label>
+                <input
+                  type="password"
+                  placeholder="Create password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+                  required
+                />
+              </div>
 
-              <input
-                type="password"
-                placeholder="Confirm password"
-                className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
-              />
-            </div>
+              <div>
+                <label className="block mb-2 text-gray-300">
+                  Confirm Password
+                </label>
 
-            <button
-              className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl font-bold text-lg transition"
-            >
-              Register
-            </button>
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 focus:border-green-400 outline-none rounded-xl px-5 py-4 text-white"
+                  required
+                />
+              </div>
 
-          </form>
+              <button
+                type="submit"
+                className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl font-bold text-lg transition"
+              >
+                Register
+              </button>
 
-          <p className="mt-8 text-gray-400 text-center">
-            Already have an account?{" "}
+            </form>
 
-            <Link
-              to="/login"
-              className="text-green-400 hover:underline"
-            >
-              Login
-            </Link>
+            <p className="mt-8 text-gray-400 text-center">
+              Already have an account?{" "}
 
-          </p>
+              <Link
+                to="/login"
+                className="text-green-400 hover:underline"
+              >
+                Login
+              </Link>
 
-        </div>
+            </p>
 
-        {/* IMAGE */}
-        <div className="hidden md:block relative">
+          </div>
 
-          <img
-            src={registerImg}
-            alt="Register"
-            className="w-full h-full object-cover"
-          />
+          {/* IMAGE */}
+          <div className="hidden md:block relative">
 
-          <div className="absolute inset-0 bg-black/40"></div>
+            <img
+              src={registerImg}
+              alt="Register"
+              className="w-full h-full object-cover"
+            />
+
+            <div className="absolute inset-0 bg-black/40"></div>
+
+          </div>
 
         </div>
 
       </div>
-
-    </div>
+    </>
   );
 }
